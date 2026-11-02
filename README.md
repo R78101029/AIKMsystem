@@ -21,6 +21,7 @@
 | [開發程序](docs/09-quality/development-process.md) | ISO/IEC 29110 |
 | [資料夾結構](docs/02-architecture/repository-structure.md) | 程式庫結構說明 |
 | [交接摘要](docs/00-project/handoff.md) | 專案起點 |
+| [對外溝通紀錄](docs/00-project/communications/README.md) | 給院內單位的說明資料存檔（含系統示意頁） |
 
 ## 快速驗證資料模型（v0.1 草稿）
 

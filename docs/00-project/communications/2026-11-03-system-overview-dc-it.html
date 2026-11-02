@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}</style>
+<!-- 本檔為 2026-11-03 發布給文管中心與資訊室的示意頁存檔（Artifact 版本 1）。可直接用瀏覽器開啟。 -->
+<title>AIKM 評鑑稽核系統</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap">
+<style>
+/* Layout: 一份給院內兩個單位審閱的「說明卷宗」——左對齊的文件式標題，中段嵌一個可操作的系統畫面，
+   以對象標籤（給文管／給資訊）分段。印章紅只用在簽核與核准。 */
+:root {
+  --paper: #f3f5f6;
+  --surface: #ffffff;
+  --sunk: #e9eef1;
+  --ink: #17222c;
+  --muted: #566673;
+  --line: #d3dce2;
+  --accent: #1d5a85;
+  --accent-soft: #e2edf5;
+  --seal: #b23126;
+  --ok: #24764a;
+  --ok-soft: #e1f1e7;
+  --warn: #9a6b00;
+  --warn-soft: #fbf0d4;
+  --bad: #b73a2e;
+  --bad-soft: #f9e2df;
+  --idle: #7b8893;
+  --idle-soft: #eceff1;
+  --mark: #fff2b8;
+  --f-display: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --f-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f151a; --surface: #161f27; --sunk: #1c2731; --ink: #e2e8ec; --muted: #9aaab6;
+    --line: #2a3742; --accent: #74aedb; --accent-soft: #1b3346; --seal: #e3675b;
+    --ok: #63c48d; --ok-soft: #173327; --warn: #e2b54b; --warn-soft: #3a2f12;
+    --bad: #ec7468; --bad-soft: #3d1d1a; --idle: #8b99a4; --idle-soft: #222c34; --mark: #4a4012;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f151a; --surface: #161f27; --sunk: #1c2731; --ink: #e2e8ec; --muted: #9aaab6;
+  --line: #2a3742; --accent: #74aedb; --accent-soft: #1b3346; --seal: #e3675b;
+  --ok: #63c48d; --ok-soft: #173327; --warn: #e2b54b; --warn-soft: #3a2f12;
+  --bad: #ec7468; --bad-soft: #3d1d1a; --idle: #8b99a4; --idle-soft: #222c34; --mark: #4a4012;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 15.5px; line-height: 1.75;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; text-wrap: balance; line-height: 1.35; margin: 0; }
+h1 { font-size: clamp(1.9rem, 4.2vw, 2.7rem); letter-spacing: .01em; }
+h2 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0; }
+.code { font-family: var(--f-mono); font-size: .86em; }
+.muted { color: var(--muted); }
+.eyebrow { font-size: .78rem; letter-spacing: .12em; color: var(--accent); font-weight: 700; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* top nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; gap: 20px; padding-block: 10px; overflow-x: auto; }
+.nav .brand { font-family: var(--f-display); font-weight: 700; white-space: nowrap; }
+.nav ul { display: flex; gap: 4px; list-style: none; margin: 0 0 0 auto; padding: 0; }
+.nav a { display: block; padding: 4px 10px; border-radius: var(--r); text-decoration: none; color: var(--muted); white-space: nowrap; font-size: .92rem; }
+.nav a:hover { color: var(--ink); background: var(--sunk); }
+
+/* hero */
+.hero { padding-block: 56px 40px; display: grid; gap: 22px; }
+.hero .lede { font-size: 1.12rem; max-width: 40em; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 6px; }
+.fact { border-top: 2px solid var(--ink); padding-top: 10px; }
+.fact b { display: block; font-size: 1.02rem; }
+.fact span { color: var(--muted); font-size: .92rem; }
+.notice { font-size: .88rem; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); padding: 8px 12px; max-width: 40em; }
+
+section.block { padding-block: 44px; border-top: 1px solid var(--line); }
+.block-head { display: grid; gap: 8px; margin-bottom: 24px; max-width: 46em; }
+
+/* compare */
+.compare { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.compare th, .compare td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.compare thead th { font-size: .8rem; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+.compare td:first-child { font-weight: 500; white-space: nowrap; }
+.compare .old { color: var(--muted); }
+.tablebox { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+
+/* concept */
+.bridge { display: grid; grid-template-columns: 1fr auto 1.2fr auto 1fr; align-items: stretch; gap: 10px; }
+.bridge .pane { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.bridge .pane.center { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.bridge .who { font-size: .8rem; color: var(--muted); letter-spacing: .06em; }
+.bridge .says { font-family: var(--f-display); font-size: 1.05rem; }
+.bridge .arrow { align-self: center; color: var(--muted); font-size: 1.3rem; }
+.spec { margin-top: 20px; display: grid; grid-template-columns: 180px 1fr; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.spec dt, .spec dd { margin: 0; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.spec dt { background: var(--sunk); color: var(--muted); font-size: .9rem; }
+.spec dt:last-of-type, .spec dd:last-of-type { border-bottom: 0; }
+.spec ul { margin: 0; padding-left: 1.2em; }
+
+/* app mock */
+.app { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px -18px rgba(10, 30, 50, .35); }
+.app-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--sunk); font-size: .88rem; }
+.app-bar .dots { display: flex; gap: 6px; }
+.app-bar .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: block; }
+.app-bar .who { margin-left: auto; color: var(--muted); }
+.roles { display: flex; gap: 2px; padding: 8px 10px 0; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.roles button {
+  font: inherit; font-size: .93rem; border: 1px solid transparent; border-bottom: 0; background: none; color: var(--muted);
+  padding: 8px 14px; border-radius: var(--r) var(--r) 0 0; cursor: pointer; white-space: nowrap;
+}
+.roles button[aria-selected="true"] { background: var(--surface); color: var(--ink); border-color: var(--line); font-weight: 700; margin-bottom: -1px; }
+.roles button small { display: block; font-size: .75rem; font-weight: 400; color: var(--muted); }
+.panel { padding: 20px; display: grid; gap: 18px; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 18px; align-items: start; }
+.card { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.card-h { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-weight: 700; font-size: .95rem; flex-wrap: wrap; }
+.card-h .aside { margin-left: auto; font-weight: 400; font-size: .85rem; color: var(--muted); }
+.card-b { padding: 12px 14px; display: grid; gap: 10px; }
+
+.chip { display: inline-flex; align-items: center; gap: 5px; font-size: .78rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; white-space: nowrap; line-height: 1.6; }
+.chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.chip.ok { color: var(--ok); background: var(--ok-soft); }
+.chip.warn { color: var(--warn); background: var(--warn-soft); }
+.chip.bad { color: var(--bad); background: var(--bad-soft); }
+.chip.idle { color: var(--idle); background: var(--idle-soft); }
+
+.tasks { list-style: none; margin: 0; padding: 0; }
+.tasks li { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.tasks li:last-child { border-bottom: 0; }
+.tasks li.sel { background: var(--accent-soft); }
+.tasks .t { font-weight: 500; }
+.tasks .d { grid-column: 1; font-size: .84rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tasks .chip { grid-row: 1 / span 2; grid-column: 2; align-self: center; }
+
+.btn { font: inherit; font-size: .9rem; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: var(--r); padding: 6px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 700; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.steps { display: flex; gap: 6px; flex-wrap: wrap; font-size: .84rem; }
+.steps span { padding: 2px 10px; border-radius: 999px; background: var(--idle-soft); color: var(--idle); }
+.steps span.done { background: var(--ok-soft); color: var(--ok); }
+.steps span.now { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+
+.meta { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; font-size: .9rem; }
+.meta dt { color: var(--muted); }
+.meta dd { margin: 0; }
+
+.elems { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.elems li { display: grid; grid-template-columns: 26px 1fr; gap: 2px 8px; padding: 9px 0; border-bottom: 1px dashed var(--line); }
+.elems li:last-child { border-bottom: 0; }
+.elems .ic { font-weight: 700; text-align: center; font-family: var(--f-mono); }
+.elems .ic.y { color: var(--ok); } .elems .ic.n { color: var(--bad); } .elems .ic.p { color: var(--warn); }
+.elems .q { grid-column: 2; font-size: .86rem; color: var(--muted); }
+.elems .q q { color: var(--ink); background: var(--mark); quotes: "「" "」"; padding: 0 2px; }
+.callout { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 8px 12px; font-size: .92rem; border-radius: 0 var(--r) var(--r) 0; }
+
+/* clause tree */
+.score { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.score b { font-family: var(--f-display); font-size: 2rem; font-variant-numeric: tabular-nums; }
+.bar { height: 8px; background: var(--idle-soft); border-radius: 99px; overflow: hidden; flex: 1 1 160px; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+details.clause { border-bottom: 1px solid var(--line); }
+details.clause:last-child { border-bottom: 0; }
+details.clause summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 10px 14px; }
+details.clause summary::-webkit-details-marker { display: none; }
+details.clause summary::before { content: "▸"; color: var(--muted); transition: transform .15s; }
+details.clause[open] summary::before { transform: rotate(90deg); }
+details.clause .body { padding: 0 14px 12px 34px; display: grid; gap: 8px; font-size: .9rem; }
+.periods { display: flex; gap: 6px; flex-wrap: wrap; }
+.periods span { font-family: var(--f-mono); font-size: .78rem; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--line); }
+.periods .ok { border-color: var(--ok); color: var(--ok); }
+.periods .warn { border-color: var(--warn); color: var(--warn); background: var(--warn-soft); }
+.periods .bad { border-color: var(--bad); color: var(--bad); background: var(--bad-soft); }
+
+.feg { display: grid; gap: 10px; }
+.feg > div { display: grid; grid-template-columns: 74px 1fr; gap: 10px; }
+.feg .k { font-size: .8rem; font-weight: 700; color: var(--accent); padding-top: 2px; }
+.grade { display: inline-block; font-weight: 700; color: var(--warn); }
+
+.evlist { list-style: none; margin: 0; padding: 0; font-size: .88rem; }
+.evlist li { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.evlist li span:last-child { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); }
+
+/* doc control */
+.flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; counter-reset: st; }
+.flow li { list-style: none; position: relative; padding: 30px 8px 0; text-align: center; font-size: .86rem; counter-increment: st; }
+.flow li::before { content: counter(st); position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; border-radius: 50%; background: var(--idle-soft); color: var(--idle); font-family: var(--f-mono); font-size: .78rem; line-height: 24px; z-index: 1; }
+.flow li::after { content: ""; position: absolute; top: 11px; left: 50%; width: 100%; height: 2px; background: var(--line); }
+.flow li:last-child::after { display: none; }
+.flow li.done::before { background: var(--ok); color: var(--surface); }
+.flow li.now::before { background: var(--accent); color: var(--surface); }
+.flow b { display: block; }
+.flow small { color: var(--muted); display: block; line-height: 1.4; }
+.flow .ext { color: var(--seal); font-weight: 700; }
+.flowbox { padding: 18px 12px 14px; overflow-x: auto; }
+.flowbox ol { margin: 0; padding: 0; min-width: 520px; }
+.vers { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.vers td, .vers th { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+.vers th { color: var(--muted); font-weight: 500; font-size: .8rem; }
+.vers .void { color: var(--muted); text-decoration: line-through; }
+.seal { display: inline-block; border: 1.5px solid var(--seal); color: var(--seal); font-size: .74rem; padding: 0 6px; border-radius: 3px; font-weight: 700; transform: rotate(-3deg); }
+
+/* bootstrap */
+.src p { font-size: .92rem; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.src p:last-child { border-bottom: 0; }
+.src mark { background: var(--mark); color: inherit; padding: 0 2px; }
+.src .art { font-family: var(--f-mono); font-size: .78rem; color: var(--muted); margin-right: 6px; }
+.draft { display: grid; grid-template-columns: 110px 1fr; font-size: .9rem; }
+.draft > * { padding: 7px 0; border-bottom: 1px dashed var(--line); }
+.draft dt { color: var(--muted); }
+.draft dd { margin: 0; }
+.draft .from { display: block; font-family: var(--f-mono); font-size: .76rem; color: var(--accent); }
+.funnel { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.funnel div { background: var(--sunk); border-radius: var(--r); padding: 10px 12px; }
+.funnel b { display: block; font-family: var(--f-display); font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.funnel span { font-size: .82rem; color: var(--muted); }
+
+/* audience sections */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.box ul, .box ol { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+.ask { counter-reset: a; list-style: none; padding: 0 !important; }
+.ask li { counter-increment: a; display: grid; grid-template-columns: 28px 1fr; gap: 6px; }
+.ask li::before { content: counter(a); font-family: var(--f-mono); font-size: .8rem; color: var(--surface); background: var(--ink); width: 20px; height: 20px; border-radius: 50%; text-align: center; line-height: 20px; margin-top: 4px; }
+
+.layers { display: grid; gap: 6px; }
+.layers div { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 10px 14px; }
+.layers b { font-family: var(--f-display); }
+.layers span { color: var(--muted); font-size: .9rem; }
+.layers .agent { border-style: dashed; border-color: var(--accent); }
+.layers .adapter { background: var(--accent-soft); border-color: var(--accent); }
+
+.plan { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.plan .box h3 { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.plan .box h3 small { font-family: var(--f-body); font-weight: 400; font-size: .85rem; color: var(--muted); }
+
+footer { padding-block: 32px 48px; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .split, .two, .plan { grid-template-columns: 1fr; }
+  .bridge { grid-template-columns: 1fr; }
+  .bridge .arrow { transform: rotate(90deg); justify-self: center; }
+  .funnel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .facts { grid-template-columns: 1fr; }
+  .spec { grid-template-columns: 1fr; }
+  .spec dt { border-bottom: 0; padding-bottom: 2px; }
+  .layers div { grid-template-columns: 1fr; gap: 2px; }
+  .draft { grid-template-columns: 1fr; }
+  .draft dt { border-bottom: 0; padding-bottom: 0; }
+  .nav ul { margin-left: 0; }
+  .panel { padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="章節">
+  <div class="wrap">
+    <span class="brand">AIKM 評鑑稽核系統</span>
+    <ul>
+      <li><a href="#why">為什麼</a></li>
+      <li><a href="#concept">核心概念</a></li>
+      <li><a href="#demo">畫面示意</a></li>
+      <li><a href="#dc">給文管</a></li>
+      <li><a href="#it">給資訊</a></li>
+      <li><a href="#plan">時程與待議</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="wrap hero">
+  <span class="eyebrow">示意版 · 2026 年 11 月 · 給文管中心與資訊室審閱</span>
+  <h1>從「放檔案」到「證明做到了」</h1>
+  <p class="lede">文件仍然放在院內的儲存空間（O365）。系統負責把<strong>評鑑條款 → 應該要有的紀錄 → 實際交來的紀錄</strong>串起來，自動檢查缺了什麼、內容齊不齊、和辦法一不一致，評鑑前一鍵產出佐證清單。</p>
+  <div class="facts">
+    <div class="fact"><b>檔案不搬家</b><span>原檔留在 O365；證據確認時另存一份不可修改的副本。</span></div>
+    <div class="fact"><b>AI 只建議，人確認</b><span>每個 AI 判斷都附原文出處，經人審後才生效。</span></div>
+    <div class="fact"><b>地端優先</b><span>含個資的文件與 AI 運算預設不出院。</span></div>
+  </div>
+  <p class="notice">本頁為討論用示意。畫面、人名、數字與辦法內容皆為模擬資料，條款編號為示意編號，不代表最終設計。</p>
+</header>
+
+<main>
+<section class="block" id="why">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="eyebrow">為什麼要換做法</span>
+      <h2>舊 KM 的四個問題，以及這次的對應方式</h2>
+    </div>
+    <div class="tablebox">
+      <table class="compare">
+        <thead><tr><th>面向</th><th>舊 KM 的情況</th><th>新系統的做法</th></tr></thead>
+        <tbody>
+          <tr><td>文件關聯</td><td class="old">可以加標籤、連結，但沒有強制，最後變成網路硬碟</td><td>從「待繳任務」上傳就自動帶入關聯，承辦人不需要懂條款；沒經確認的檔案不算佐證</td></tr>
+          <tr><td>評鑑模組</td><td class="old">只是讓人把資料連過去</td><td>AI 歸類、逐項檢查必備要素、比對辦法與紀錄是否一致</td></tr>
+          <tr><td>評鑑進度</td><td class="old">過於空泛，看不出缺什麼</td><td>準備度由系統計算（已確認且齊全的期數 ÷ 應有期數），可以點進去看缺漏原因</td></tr>
+          <tr><td>簽署過程</td><td class="old">缺乏</td><td>主管認可、文件核准都留下簽核紀錄；簽核後內容若被修改，自動要求重簽</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="concept">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="eyebrow">核心概念</span>
+      <h2>同一份資料，上傳者和評鑑者各自看得懂</h2>
+      <p class="muted">單位同仁用「工作語言」繳交紀錄，品管與評鑑小組用「條款語言」檢視準備度。中間的翻譯層叫做<strong>證據規格</strong>。</p>
+    </div>
+    <div class="bridge">
+      <div class="pane"><span class="who">單位承辦人看到</span><span class="says">「感管會議紀錄 2026 Q3，10/14 前繳交」</span><span class="muted">待繳清單、上傳</span></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="pane center"><span class="who">系統內部：證據規格</span><span class="says">什麼紀錄 · 多久一次 · 誰產生 · 需含哪些要素</span><span class="muted">由辦法自動抽取草稿，品管審定</span></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="pane"><span class="who">品管／評鑑小組看到</span><span class="says">「條款 3.1：4 季中 3 季齊全」</span><span class="muted">燈號、準備度、佐證清單</span></div>
+    </div>
+    <dl class="spec">
+      <dt>證據規格（範例）</dt><dd><strong>感染管制委員會會議紀錄</strong></dd>
+      <dt>多久一次</dt><dd>每季一次，寬限 14 天</dd>
+      <dt>誰產生</dt><dd>感染管制委員會幹事（感染管制中心）</dd>
+      <dt>必備要素</dt><dd><ul><li>會議日期</li><li>主席符合設置辦法規定</li><li>出席達委員半數</li><li>前次決議追蹤</li><li>感染監測資料報告與檢討</li><li>決議事項載明負責人與期限</li></ul></dd>
+      <dt>對應條款</dt><dd>醫院評鑑 3.1（示意編號）；ISO 9001 §9.3 管理審查（只存條號，不存條文）</dd>
+      <dt>依據</dt><dd>感染管制委員會設置辦法 <span class="code">ICC-P-001 v3</span> 第 3、4、6 條</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="block" id="demo">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="eyebrow">畫面示意 · 可操作</span>
+      <h2>四種角色，四個入口</h2>
+      <p class="muted">切換上方的角色分頁，看看同一套資料在不同人眼中的樣子。</p>
+    </div>
+
+    <div class="app">
+      <div class="app-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>示範醫院 · 評鑑稽核系統</span><span class="who" id="who">登入者：林○○（感染管制中心）</span></div>
+      <div class="roles" role="tablist" aria-label="角色">
+        <button role="tab" id="t-staff" aria-controls="p-staff" aria-selected="true">單位承辦人<small>繳交紀錄</small></button>
+        <button role="tab" id="t-qm" aria-controls="p-qm" aria-selected="false">品管人員<small>條款與稽核</small></button>
+        <button role="tab" id="t-dc" aria-controls="p-dc" aria-selected="false">文管中心<small>文件管制</small></button>
+        <button role="tab" id="t-boot" aria-controls="p-boot" aria-selected="false">導入建置<small>由辦法建立規格</small></button>
+      </div>
+
+      <!-- 承辦人 -->
+      <div class="panel" role="tabpanel" id="p-staff" aria-labelledby="t-staff">
+        <div class="split">
+          <div class="card">
+            <div class="card-h">我的待繳清單<span class="aside">今天 2026-11-03</span></div>
+            <ul class="tasks">
+              <li class="sel"><span class="t">感染管制委員會會議紀錄 · 2026 Q3</span><span class="d">期限 2026-10-14 · 已上傳</span><span class="chip warn">待補件</span></li>
+              <li><span class="t">急救車每日檢查表 · 2026 年 10 月</span><span class="d">期限 2026-11-07</span><span class="chip idle">待繳</span></li>
+              <li><span class="t">手部衛生稽核報告 · 2026 年 10 月</span><span class="d">期限 2026-11-10</span><span class="chip idle">待繳</span></li>
+              <li><span class="t">感染監測月報 · 2026 年 9 月</span><span class="d">期限 2026-10-15 · 未繳</span><span class="chip bad">逾期</span></li>
+              <li><span class="t">感染管制委員會會議紀錄 · 2026 Q2</span><span class="d">主管已認可 2026-07-22</span><span class="chip ok">已確認</span></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-h">AI 檢查結果<span class="aside">115年第3季感管會議紀錄.docx</span></div>
+            <div class="card-b">
+              <div class="steps" id="steps" aria-live="polite">
+                <span class="done">解析文件</span><span class="done">歸類</span><span class="done">要素檢查</span><span class="done">比對辦法</span>
+              </div>
+              <dl class="meta">
+                <dt>歸類為</dt><dd>感染管制委員會會議紀錄 · 2026 Q3</dd>
+                <dt>信心</dt><dd>0.96</dd>
+              </dl>
+              <ul class="elems" id="elems">
+                <li><span class="ic y">✓</span><span>會議日期</span><span class="q"><q>時間：115年9月15日 14:00</q> 第 1 頁</span></li>
+                <li><span class="ic y">✓</span><span>主席符合規定</span><span class="q"><q>主席：○副院長（院長指定）</q> 第 1 頁</span></li>
+                <li><span class="ic y">✓</span><span>出席達委員半數</span><span class="q">出席 11／應出席 15（73%）第 1 頁</span></li>
+                <li><span class="ic n">✗</span><span>前次決議追蹤</span><span class="q">全文找不到對 Q2 會議 3 項決議的追蹤或列管</span></li>
+                <li><span class="ic y">✓</span><span>感染監測資料檢討</span><span class="q"><q>報告事項二：第二季院內感染密度…</q> 第 2 頁</span></li>
+                <li><span class="ic p">△</span><span>決議載明負責人與期限</span><span class="q">決議 3 項中，第 2 項未載明完成期限（第 3 頁）</span></li>
+              </ul>
+              <p class="callout">請補上「前次決議追蹤」與第 2 項決議的期限後重新上傳。如果認為 AI 判斷有誤，可以申請品管人工判定。</p>
+              <div class="btn-row"><button class="btn primary" id="replay">模擬重新上傳</button><button class="btn" type="button">申請人工判定</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 品管 -->
+      <div class="panel" role="tabpanel" id="p-qm" aria-labelledby="t-qm" hidden>
+        <div class="split">
+          <div class="card">
+            <div class="card-h">條款視角 · 第 3 章 感染管制（示意）<span class="aside">待審 7 筆</span></div>
+            <div class="card-b">
+              <div class="score"><b>78%</b><span class="muted">本章準備度</span><span class="bar" aria-hidden="true"><i style="width:78%"></i></span></div>
+            </div>
+            <details class="clause" open>
+              <summary><span>3.1 感染管制組織運作</span><span class="chip warn">部分缺漏</span></summary>
+              <div class="body">
+                <span>設置辦法 <span class="code">ICC-P-001 v3</span> · 現行版 <span class="chip ok">已對應</span></span>
+                <span>感管委員會會議紀錄（每季）</span>
+                <div class="periods"><span class="ok">2025Q4 ✓</span><span class="ok">2026Q1 ✓</span><span class="warn">2026Q2 主席不符</span><span class="warn">2026Q3 待補件</span></div>
+              </div>
+            </details>
+            <details class="clause">
+              <summary><span>3.2 感染監測與通報</span><span class="chip bad">缺件</span></summary>
+              <div class="body">
+                <span>感染監測月報（每月）：12 期中 10 期已確認</span>
+                <div class="periods"><span class="ok">1–7 月 ✓</span><span class="bad">8 月 缺</span><span class="bad">9 月 逾期</span><span class="ok">10 月 ✓</span></div>
+              </div>
+            </details>
+            <details class="clause">
+              <summary><span>3.3 手部衛生</span><span class="chip ok">齊全</span></summary>
+              <div class="body"><span>手部衛生稽核報告（每月）：10／10 期已確認，要素齊全</span></div>
+            </details>
+            <div class="card-b"><div class="btn-row"><button class="btn primary" id="evbtn" aria-expanded="false" aria-controls="evpanel">一鍵佐證清單：3.1</button></div>
+              <div id="evpanel" hidden>
+                <ul class="evlist">
+                  <li><span>感染管制委員會設置辦法 v3（生效 2025-07-01）</span><span>副本 ✓</span></li>
+                  <li><span>114年第4季感管會議紀錄（主管認可 2026-01-20）</span><span>副本 ✓</span></li>
+                  <li><span>115年第1季感管會議紀錄（主管認可 2026-04-18）</span><span>副本 ✓</span></li>
+                  <li><span>115年第2季感管會議紀錄（待處理：主席不符）</span><span>—</span></li>
+                </ul>
+                <p class="muted" style="font-size:.85rem;margin-top:6px">只列出已確認的證據；每份都有不可修改的副本，原檔在 O365 被改動也不影響。</p>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h">一致性稽核發現<span class="aside" id="fstatus"><span class="chip warn">待確認</span></span></div>
+            <div class="card-b">
+              <div class="feg">
+                <div><span class="k">找出問題</span><p>設置辦法第 3 條規定會議「由院長或其指定之副院長主持」，2026 Q2 會議紀錄記載主席為感染管制中心主任。</p></div>
+                <div><span class="k">解釋</span><p>主持人不符合辦法規定的資格，紀錄中也沒有載明代理授權。評鑑時可能被認定為委員會運作不符規定。</p></div>
+                <div><span class="k">分級</span><p><span class="grade">次要缺失</span><span class="muted"> · 建議：補附院長授權文件；若常態由主任主持，則修訂辦法。</span></p></div>
+              </div>
+              <p class="muted" style="font-size:.85rem">出處：<span class="code">ICC-P-001 v3 第3條</span> ↔ <span class="code">115年第2季會議紀錄 第1頁</span></p>
+              <div class="btn-row"><button class="btn primary" id="fconfirm">確認並開立改善</button><button class="btn" id="fdismiss">不成立</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 文管 -->
+      <div class="panel" role="tabpanel" id="p-dc" aria-labelledby="t-dc" hidden>
+        <div class="card">
+          <div class="card-h">感染管制委員會設置辦法 <span class="code">ICC-P-001</span><span class="aside">v4 修訂中 · 現行版 v3</span></div>
+          <div class="flowbox">
+            <ol class="flow">
+              <li class="done"><b>撰寫</b><small>感染管制中心<br>2026-10-02</small></li>
+              <li class="done"><b>單位主管審查</b><small>2026-10-08</small></li>
+              <li class="done"><b>委員會通過</b><small>第 3 次會議<br>2026-10-20</small></li>
+              <li class="now"><b>公文簽核</b><small><span class="ext">外部步驟</span><br>上傳簽核單後完成</small></li>
+              <li><b>生效</b><small>舊版自動作廢</small></li>
+            </ol>
+          </div>
+          <div class="card-b"><p class="muted" style="font-size:.88rem">生效流程依本院規定設定。公文屬於外部步驟：公文核准後，把簽核單上傳到這一步，簽核單會成為本辦法的關聯文件。</p></div>
+        </div>
+        <div class="split">
+          <div class="card">
+            <div class="card-h">版本紀錄</div>
+            <div style="overflow-x:auto">
+              <table class="vers">
+                <thead><tr><th>版次</th><th>狀態</th><th>生效日</th><th>核准</th></tr></thead>
+                <tbody>
+                  <tr><td>v4</td><td><span class="chip idle">修訂中</span></td><td>—</td><td>—</td></tr>
+                  <tr><td>v3</td><td><span class="chip ok">現行</span></td><td>2025-07-01</td><td><span class="seal">已核准</span></td></tr>
+                  <tr class="void"><td>v2</td><td>已作廢</td><td>2023-03-01</td><td>已核准</td></tr>
+                  <tr class="void"><td>v1</td><td>已作廢</td><td>2020-01-15</td><td>已核准</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-b"><span class="muted" style="font-size:.86rem">下次定期審查：2027-07-01 · 同仁查詢時預設只看到現行版</span></div>
+          </div>
+          <div class="card">
+            <div class="card-h">改版影響（系統自動列出）</div>
+            <div class="card-b">
+              <p style="font-size:.92rem">v4 修訂內容：第 4 條開會頻率「每三個月」改為「<mark style="background:var(--mark);color:inherit">每兩個月</mark>」</p>
+              <ul class="evlist">
+                <li><span>證據規格「感管委員會會議紀錄」頻率需更新</span><span class="chip warn">待處理</span></li>
+                <li><span>條款 3.1 的燈號期間將改為每兩個月</span><span class="chip idle">生效後</span></li>
+                <li><span>附表「會議紀錄格式」未引用新條文</span><span class="chip warn">建議檢視</span></li>
+              </ul>
+              <p class="muted" style="font-size:.85rem">辦法一改，下游的規格、任務、條款跟著更新，避免「辦法寫一套、紀錄做一套」。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 導入 -->
+      <div class="panel" role="tabpanel" id="p-boot" aria-labelledby="t-boot" hidden>
+        <div class="funnel">
+          <div><b>214</b><span>匯入辦法與 SOP</span></div>
+          <div><b>486</b><span>AI 抽出的「應產生紀錄」</span></div>
+          <div><b>61</b><span>待品管審核</span></div>
+          <div><b>28</b><span>單位確認清單已回收／共 34</span></div>
+        </div>
+        <div class="split">
+          <div class="card src">
+            <div class="card-h">辦法原文 · ICC-P-001 v3</div>
+            <div class="card-b">
+              <p><span class="art">第3條</span>本委員會置主任委員一人，<mark>由院長兼任或由院長指定副院長擔任</mark>，並主持會議。</p>
+              <p><span class="art">第4條</span>本委員會<mark>每三個月召開會議一次</mark>，必要時得召開臨時會議。</p>
+              <p><span class="art">第5條</span>會議須有<mark>委員二分之一以上出席</mark>始得開會。</p>
+              <p><span class="art">第6條</span>會議紀錄應載明<mark>出席人員、報告事項、討論事項、決議事項及前次決議追蹤辦理情形</mark>。</p>
+              <p><span class="art">第7條</span>本委員會<mark>置幹事一人，由感染管制中心指派</mark>，辦理會議紀錄及議事事務。</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h">AI 產出的證據規格草稿<span class="aside"><span class="chip warn">待審</span></span></div>
+            <div class="card-b">
+              <dl class="draft">
+                <dt>紀錄名稱</dt><dd>感染管制委員會會議紀錄</dd>
+                <dt>頻率</dt><dd>每季一次<span class="from">← 第4條</span></dd>
+                <dt>誰產生</dt><dd>委員會幹事（感染管制中心）<span class="from">← 第7條</span></dd>
+                <dt>必備要素</dt><dd>主席資格、出席過半、出席人員、報告事項、討論事項、決議事項、前次決議追蹤<span class="from">← 第3、5、6條</span></dd>
+                <dt>建議對應</dt><dd>條款 3.1（示意）<span class="from">← 依內容比對，需人工確認</span></dd>
+              </dl>
+              <div class="btn-row"><button class="btn primary" type="button">確認為正式規格</button><button class="btn" type="button">修改</button><button class="btn" type="button">送單位確認</button></div>
+              <p class="muted" style="font-size:.85rem">過去要由專家逐單位訪談盤點。現在先由 AI 讀辦法列出清單，單位只需要勾選確認或修正。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="dc">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="eyebrow">給文管中心</span>
+      <h2>依 ISO 文件管制要求設計</h2>
+      <p class="muted">系統區分「文件」與「紀錄」：辦法、程序書會改版，需要核准與作廢管制；會議紀錄、檢查表一旦產生就不得修改，需要保存與防竄改。</p>
+    </div>
+    <div class="tablebox" style="margin-bottom:18px">
+      <table class="compare">
+        <thead><tr><th>ISO 9001 §7.5 要求</th><th>系統功能</th></tr></thead>
+        <tbody>
+          <tr><td>識別</td><td>文件編號（規則可自訂）、版次、生效日</td></tr>
+          <tr><td>審查與核准</td><td>撰寫 → 審查 → 核准，關卡可自訂；可加入委員會、公文等外部步驟</td></tr>
+          <tr><td>變更可辨識</td><td>每版附修訂摘要，新舊版差異比對</td></tr>
+          <tr><td>防止誤用舊版</td><td>舊版自動標示作廢，查詢預設只看現行版</td></tr>
+          <tr><td>定期審查</td><td>依審查週期自動提醒</td></tr>
+          <tr><td>發行與取用</td><td>依單位權限取用，可要求閱讀確認</td></tr>
+          <tr><td>外來文件</td><td>法規、標準書登記版本並追蹤</td></tr>
+          <tr><td>保存與銷毀</td><td>依保存期限處理，銷毀需核准並留紀錄</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two">
+      <div class="box">
+        <h3>比舊系統多做的事</h3>
+        <ul>
+          <li>辦法改版時，自動列出受影響的紀錄規格、表單與評鑑條款</li>
+          <li>辦法與實際紀錄的一致性稽核</li>
+          <li>紀錄確認時另存不可修改的副本，原檔被改會自動要求重審</li>
+          <li>全程稽核軌跡：誰在何時上傳、確認、修改、核准</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>需要文管中心協助</h3>
+        <ol class="ask">
+          <li>提供全院辦法與 SOP 的現行版全集（Word／PDF）</li>
+          <li>說明文件生效流程：哪些需要委員會、哪些需要公文、核准層級</li>
+          <li>提供文件編號規則</li>
+          <li>確認舊 KM 合約到期日，安排在到期前連同標籤、路徑、日期完整匯出</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="it">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="eyebrow">給資訊室</span>
+      <h2>架構、整合點與資安原則</h2>
+      <p class="muted">每個外部系統都透過「轉接器」介接。換儲存、換帳號系統、換 AI 模型，都不需要改動核心程式。</p>
+    </div>
+    <div class="layers" style="margin-bottom:22px">
+      <div><b>使用介面</b><span>任務、單位、條款三種視角；審核佇列；燈號與準備度</span></div>
+      <div class="agent"><b>Agent 層</b><span>導入分析、稽核監控；只能呼叫下層功能，只產生建議與通知</span></div>
+      <div><b>應用模組</b><span>收件、歸類、要素檢查、一致性稽核、文件管制、簽核、改版影響、改善追蹤</span></div>
+      <div><b>AI 服務層</b><span>統一的任務介面；模型可依任務指定；每次呼叫留紀錄；黃金測試集把關</span></div>
+      <div><b>知識核心</b><span>組織與成員、標準條款、證據規格、文件版本、稽核軌跡（PostgreSQL）</span></div>
+      <div class="adapter"><b>轉接器</b><span>儲存 · 證據副本 · 收件 · 通知 · AI 模型 · 登入</span></div>
+    </div>
+    <div class="tablebox" style="margin-bottom:18px">
+      <table class="compare">
+        <thead><tr><th>整合項目</th><th>做法</th><th>需要資訊室協助</th></tr></thead>
+        <tbody>
+          <tr><td>登入</td><td>OIDC，使用院內 O365（Entra ID）帳號</td><td>註冊應用程式、設定回呼網址</td></tr>
+          <tr><td>人員與單位</td><td>先以 Excel 範本匯入，之後同步 Entra ID 或人事資料；一人可屬多個單位</td><td>確認部門欄位是否可靠、人事異動來源</td></tr>
+          <tr><td>文件儲存</td><td>Microsoft Graph；權限只申請 <span class="code">Sites.Selected</span>（只授權指定的 SharePoint 網站），增量同步</td><td>管理員授權指定網站</td></tr>
+          <tr><td>證據副本</td><td>院內 S3 相容物件儲存（可設寫入後鎖定）或 NAS；相同內容只存一份</td><td>容量規劃（粗估每年 20–100 GB，需以實際資料校正）</td></tr>
+          <tr><td>通知</td><td>Email（SMTP）；LINE、Teams 之後選配</td><td>提供寄件帳號</td></tr>
+          <tr><td>AI 模型</td><td>院內推論伺服器（OpenAI 相容 API）；含個資的任務強制走院內模型</td><td>評估 GPU 主機規格</td></tr>
+          <tr><td>資料庫與部署</td><td>PostgreSQL 16 + pgvector；容器化院內安裝</td><td>主機、備份、還原演練</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two">
+      <div class="box">
+        <h3>資安原則</h3>
+        <ul>
+          <li>文件與含個資的 AI 運算預設不出院</li>
+          <li>最小權限：O365 只授權指定網站；Agent 使用受限的服務帳號</li>
+          <li>密鑰不存資料庫；傳輸與靜態資料加密</li>
+          <li>稽核軌跡只能新增、不能修改；每次 AI 呼叫都有紀錄</li>
+          <li>上線前由獨立廠商進行資安檢測</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>權限規則</h3>
+        <ul>
+          <li>一般同仁：看得到自己所屬單位（含委員會、專案小組）的文件</li>
+          <li>主管：所屬單位及下層單位</li>
+          <li>品管人員：全部，可編輯</li>
+          <li>評鑑小組、高層：全部，唯讀</li>
+          <li>委員任期、輪調到期，權限自動收回</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="plan">
+  <div class="wrap">
+    <div class="block-head">
+      <span class="eyebrow">時程與待議</span>
+      <h2>分三階段，先用模擬資料驗證</h2>
+    </div>
+    <div class="plan" style="margin-bottom:18px">
+      <div class="box"><h3>MVP-0 <small>約 2 人月</small></h3><p>用模擬辦法與模擬紀錄跑通主線：匯入辦法 → 產生證據規格 → 上傳 → AI 檢查與一致性稽核 → 人審 → 燈號 → 佐證清單。</p><p class="muted" style="font-size:.88rem">不需要院內資料，也不需要任何系統整合。</p></div>
+      <div class="box"><h3>MVP-1 <small>院內試點</small></h3><p>內建文件管制、簽核、O365 與帳號整合、辦法全集導入、稽核監控、地端部署。</p><p class="muted" style="font-size:.88rem">需要院方書面同意與文管、資訊協助；工作量重估中。</p></div>
+      <div class="box"><h3>產品版 <small>多院</small></h3><p>多院區、多院、跨評鑑與 ISO 對應、更多儲存與通知管道。</p></div>
+    </div>
+    <div class="box">
+      <h3>這次想請兩個單位一起討論</h3>
+      <ol class="ask">
+        <li>舊 KM 合約何時到期？匯出格式能否包含標籤、資料夾路徑與日期？</li>
+        <li>文件生效流程有哪些類型？哪些需要公文？</li>
+        <li>O365 的 SharePoint 網站規劃：證據庫要放在哪個網站？</li>
+        <li>Entra ID 的部門資料是否可以作為權限依據？</li>
+        <li>院內是否有可以跑 AI 模型的主機，或需要另外評估？</li>
+        <li>證據副本要放在 NAS 還是另建物件儲存？</li>
+      </ol>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">依據內部專案文件：需求規格書 v0.1、架構決策紀錄 ADR-0001～0019（2026-11-03）。本頁為示意，所有畫面資料皆為模擬。</div>
+</footer>
+
+<script>
+(function () {
+  // 角色分頁
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.roles [role="tab"]'));
+  var who = { 't-staff': '登入者：林○○（感染管制中心）', 't-qm': '登入者：陳○○（品質管理中心）', 't-dc': '登入者：張○○（文件管理中心）', 't-boot': '登入者：陳○○（品質管理中心）· 導入模式' };
+  function select(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    document.getElementById('who').textContent = who[tab.id];
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(t); });
+    t.addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      var n = tabs[(i + d + tabs.length) % tabs.length];
+      select(n); n.focus();
+    });
+  });
+
+  // 模擬重新上傳
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var steps = Array.prototype.slice.call(document.querySelectorAll('#steps span'));
+  var elems = document.getElementById('elems');
+  var replay = document.getElementById('replay');
+  replay.addEventListener('click', function () {
+    replay.disabled = true;
+    elems.style.opacity = '.35';
+    steps.forEach(function (s) { s.className = ''; });
+    var i = 0;
+    function next() {
+      if (i > 0) steps[i - 1].className = 'done';
+      if (i < steps.length) { steps[i].className = 'now'; i++; setTimeout(next, reduce ? 0 : 550); }
+      else { elems.style.opacity = ''; replay.disabled = false; }
+    }
+    next();
+  });
+
+  // 佐證清單
+  var evbtn = document.getElementById('evbtn'), evpanel = document.getElementById('evpanel');
+  evbtn.addEventListener('click', function () {
+    evpanel.hidden = !evpanel.hidden;
+    evbtn.setAttribute('aria-expanded', evpanel.hidden ? 'false' : 'true');
+  });
+
+  // 稽核發現
+  var fs = document.getElementById('fstatus');
+  document.getElementById('fconfirm').addEventListener('click', function () {
+    fs.innerHTML = '<span class="chip ok">已確認 · 已開立改善（負責人：感染管制中心，期限 2026-12-15）</span>';
+  });
+  document.getElementById('fdismiss').addEventListener('click', function () {
+    fs.innerHTML = '<span class="chip idle">已判定不成立（已記錄理由）</span>';
+  });
+})();
+</script>
+</body>
+</html>
