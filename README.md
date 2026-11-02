@@ -1,40 +1,41 @@
 # AIKMsystem · 評鑑導向 KM＋AI 稽核系統
 
-醫療機構的「標準框架導向」知識管理與 AI 稽核覆蓋層。檔案留在院方既有儲存（Office 365、NAS…），系統負責把**條款 → 證據規格 → 實際紀錄**串起來，用 AI 做歸類、完整性檢查與規章／紀錄一致性比對，輸出燈號與一鍵佐證清單。
+醫療機構「標準框架導向」的知識管理與 AI 稽核覆蓋層。
+
+- 以**條款**為錨點，以**證據規格**為翻譯層，把「辦法（P）→ 應產生的紀錄（D/C）→ 實際紀錄」串起來。
+- AI 負責歸類、要素完整性檢查，以及辦法與紀錄的一致性稽核。
+- 輸出燈號、準備度與一鍵佐證清單。
+- 導入時，由 Agent 從辦法中自動整理出文件架構，取代逐單位訪談。
 
 痛點在 **D（執行）與 C（查核）**，不是 P（寫規章）。
 
-## 文件導覽
+## 目前階段：需求分析
 
 | 文件 | 內容 |
 |---|---|
-| [docs/00-handoff.md](docs/00-handoff.md) | 專案起點：討論結論原文 |
-| [docs/01-architecture.md](docs/01-architecture.md) | 五層架構、轉接器、AI 模組 |
-| [docs/02-data-model.md](docs/02-data-model.md) | 知識核心資料模型 v0.1 |
-| [docs/03-mvp0-scope.md](docs/03-mvp0-scope.md) | MVP-0 範圍與第一類證據選擇 |
-| [docs/04-business-compliance.md](docs/04-business-compliance.md) | 智財、利益迴避、著作權、資安檢核表 |
-| [docs/deployment.md](docs/deployment.md) | 部署文件（從第一天維護） |
-| [docs/adr/](docs/adr/README.md) | 架構決策紀錄 |
+| [需求規格書](docs/01-requirements/requirements.md) | 角色、功能需求、非功能需求（REQ 編號） |
+| [系統架構](docs/02-architecture/architecture.md) | 六層架構、轉接器、模組 |
+| [架構決策紀錄](docs/adr/README.md) | ADR-0001～0019 |
+| [專案計畫](docs/00-project/project-plan.md) | 里程碑、下一步、風險 |
+| [討論紀錄](docs/discussions/) | 依日期整理 |
+| [開發程序](docs/09-quality/development-process.md) | ISO/IEC 29110 |
+| [資料夾結構](docs/02-architecture/repository-structure.md) | 程式庫結構說明 |
+| [交接摘要](docs/00-project/handoff.md) | 專案起點 |
 
-## 目前進度
+## 快速驗證資料模型（v0.1 草稿）
 
-- [x] 知識核心資料模型 v0.1（`db/migrations/0001_knowledge_core.sql`）
-- [x] 虛構示範資料與冒煙測試
-- [ ] 確認 MVP-0 第一類證據（建議：委員會會議紀錄）
-- [ ] MVP-0 應用程式：上傳 → 解析 → AI 歸類／完整性／一致性 → 人審 → 燈號
-
-## 快速驗證資料模型
+需要本機已安裝 PostgreSQL 16 與 pgvector：
 
 ```bash
-./scripts/db-test-local.sh
+./tools/db-test-local.sh
 ```
 
-（需本機 PostgreSQL 16 + pgvector；或用 Docker，見 [deployment.md](docs/deployment.md)）
+使用 Docker 的方式見[部署文件](docs/06-deployment/deployment.md)。
 
 ## 里程碑
 
 | 階段 | 工作量 | 內容 |
 |---|---|---|
-| MVP-0 | 約 1.5 人月 | 一類證據跑通全流程，自己做 |
-| MVP-1 | 約 3–4 人月 | 安南免費試點，找第一位工程師 |
-| 產品版 | 約 8–12 人月 | 多院、M365／Google／NAS 轉接器、跨框架 |
+| MVP-0 | 約 2 人月 | 匯入辦法 → 證據規格 → 任務 → 上傳 → AI 檢查與一致性稽核 → 人審 → 燈號，使用模擬資料 |
+| MVP-1 | 待重估 | 安南免費試點：文管、簽核、導入與監控 Agent、O365、OIDC |
+| 產品版 | 待重估 | 多院、跨框架、其他轉接器 |
