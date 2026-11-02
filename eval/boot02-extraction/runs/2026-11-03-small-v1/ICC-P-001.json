@@ -1,0 +1,43 @@
+{
+  "policy_id": "ICC-P-001",
+  "evidence_specs": [
+    {
+      "name": "感染管制委員會會議紀錄",
+      "record_type": "meeting_minutes",
+      "pdca_phase": "C",
+      "frequency": {
+        "unit": "event",
+        "interval": 1,
+        "deadline": "會後十四日內",
+        "source_text": "會議紀錄應於會後十四日內陳主任委員核定，並保存七年。"
+      },
+      "producer": { "unit": "感染管制中心", "role": "幹事" },
+      "approver": "主任委員",
+      "required_elements": [
+        { "name": "開會日期", "source": "第6條" },
+        { "name": "出席及請假人員", "source": "第6條" },
+        { "name": "報告事項", "source": "第6條" },
+        { "name": "討論事項", "source": "第6條" },
+        { "name": "決議事項", "source": "第6條" },
+        { "name": "決議事項之負責單位", "source": "第6條" },
+        { "name": "決議事項之完成期限", "source": "第6條" },
+        { "name": "會議討論範圍：院內感染監測資料報告與檢討、前次決議執行追蹤、抗生素使用管理報告、感染管制政策與作業規範審議、其他感染管制事項", "source": "第5條" }
+      ],
+      "retention": "七年",
+      "sources": ["第3條", "第6條", "第7條"],
+      "confidence": 0.85
+    }
+  ],
+  "issues": [
+    {
+      "type": "ambiguous_frequency",
+      "description": "第3條「必要時得召開臨時會議」，臨時會議的次數與時點無法判定，其會議紀錄的產生頻率不明確。",
+      "sources": ["第3條"]
+    },
+    {
+      "type": "missing_responsibility",
+      "description": "第5條第1款（院內感染監測資料之報告）與第3款（抗生素使用管理報告）未指明由哪一單位提報；第2款（前次決議事項之執行追蹤）亦未指明由誰追蹤。",
+      "sources": ["第5條"]
+    }
+  ]
+}

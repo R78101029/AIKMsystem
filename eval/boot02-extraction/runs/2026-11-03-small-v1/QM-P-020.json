@@ -1,0 +1,167 @@
+{
+  "policy_id": "QM-P-020",
+  "evidence_specs": [
+    {
+      "name": "異常事件通報單",
+      "record_type": "incident_report",
+      "pdca_phase": "C",
+      "frequency": {
+        "unit": "event",
+        "interval": 1,
+        "deadline": "發生後二十四小時內（SAC 第一級或第二級為二小時內）",
+        "source_text": "異常事件發生後，發現人員應於二十四小時內透過院內通報系統填寫「異常事件通報單」（附件一）完成通報；SAC 第一級或第二級者，應於二小時內完成通報"
+      },
+      "producer": { "unit": "通報人所屬單位（附件一）", "role": "發現人員" },
+      "approver": null,
+      "required_elements": [
+        { "name": "發生日期時間", "source": "附件一" },
+        { "name": "發生地點", "source": "附件一" },
+        { "name": "事件類別（第2條所列類別）", "source": "附件一、第2條" },
+        { "name": "事件經過", "source": "附件一" },
+        { "name": "病人結果", "source": "附件一" },
+        { "name": "嚴重度評估（SAC）", "source": "附件一、第4條" },
+        { "name": "立即處理措施", "source": "附件一" },
+        { "name": "通報人單位", "source": "附件一" },
+        { "name": "通報日期時間", "source": "附件一" }
+      ],
+      "retention": null,
+      "sources": ["第2條", "第3條", "第4條", "附件一"],
+      "confidence": 0.9
+    },
+    {
+      "name": "異常事件處理回覆單",
+      "record_type": "incident_report",
+      "pdca_phase": "A",
+      "frequency": {
+        "unit": "event",
+        "interval": 1,
+        "deadline": "接獲通報後七日內",
+        "source_text": "單位主管應於接獲通報後七日內完成初步調查並擬定改善措施，填寫「異常事件處理回覆單」（附件二）"
+      },
+      "producer": { "unit": "事件所屬單位", "role": "單位主管" },
+      "approver": "部門主管",
+      "required_elements": [
+        { "name": "通報單編號", "source": "附件二" },
+        { "name": "調查結果", "source": "附件二、第5條" },
+        { "name": "原因分析", "source": "附件二" },
+        { "name": "改善措施", "source": "附件二、第5條" },
+        { "name": "預計完成日期", "source": "附件二" },
+        { "name": "單位主管簽名", "source": "附件二" },
+        { "name": "部門主管核閱", "source": "附件二、第5條" }
+      ],
+      "retention": null,
+      "sources": ["第3條", "第5條", "附件二"],
+      "confidence": 0.9
+    },
+    {
+      "name": "根本原因分析報告",
+      "record_type": "analysis_report",
+      "pdca_phase": "C",
+      "frequency": {
+        "unit": "event",
+        "interval": 1,
+        "deadline": "事件發生後一個月內",
+        "source_text": "SAC 第一級或第二級之事件，應於事件發生後一個月內完成根本原因分析"
+      },
+      "producer": { "unit": null, "role": null },
+      "approver": "病人安全委員會（審議）",
+      "required_elements": [
+        { "name": "事件經過", "source": "第6條" },
+        { "name": "根本原因", "source": "第6條" },
+        { "name": "改善行動計畫", "source": "第6條" },
+        { "name": "負責人", "source": "第6條" },
+        { "name": "完成期限", "source": "第6條" }
+      ],
+      "retention": null,
+      "sources": ["第3條", "第6條"],
+      "confidence": 0.8
+    },
+    {
+      "name": "異常事件季統計分析報告",
+      "record_type": "analysis_report",
+      "pdca_phase": "C",
+      "frequency": {
+        "unit": "quarter",
+        "interval": 1,
+        "deadline": null,
+        "source_text": "品質管理中心每季統計分析異常事件之類別、嚴重度及改善情形，提報病人安全委員會"
+      },
+      "producer": { "unit": "品質管理中心", "role": null },
+      "approver": null,
+      "required_elements": [
+        { "name": "異常事件類別", "source": "第7條" },
+        { "name": "嚴重度", "source": "第7條" },
+        { "name": "改善情形", "source": "第7條" }
+      ],
+      "retention": null,
+      "sources": ["第3條", "第7條"],
+      "confidence": 0.85
+    },
+    {
+      "name": "年度病人安全報告",
+      "record_type": "analysis_report",
+      "pdca_phase": "C",
+      "frequency": {
+        "unit": "year",
+        "interval": 1,
+        "deadline": null,
+        "source_text": "每年彙整年度病人安全報告"
+      },
+      "producer": { "unit": "品質管理中心", "role": null },
+      "approver": null,
+      "required_elements": [],
+      "retention": null,
+      "sources": ["第3條", "第7條"],
+      "confidence": 0.8
+    },
+    {
+      "name": "衛生主管機關通報紀錄",
+      "record_type": "other",
+      "pdca_phase": "C",
+      "frequency": {
+        "unit": "event",
+        "interval": 1,
+        "deadline": "依相關規定期限（本辦法未載明天數）",
+        "source_text": "符合主管機關規定之應通報事件，品質管理中心應依相關規定期限通報衛生主管機關"
+      },
+      "producer": { "unit": "品質管理中心", "role": null },
+      "approver": null,
+      "required_elements": [],
+      "retention": null,
+      "sources": ["第3條", "第8條"],
+      "confidence": 0.7
+    }
+  ],
+  "issues": [
+    {
+      "type": "missing_responsibility",
+      "description": "第6條要求 SAC 第一級或第二級事件完成根本原因分析報告，但未指明由哪一單位或人員完成；第3條僅規定品質管理中心為「協助」根本原因分析，producer 填 null。",
+      "sources": ["第3條", "第6條"]
+    },
+    {
+      "type": "external_reference",
+      "description": "第8條依「主管機關規定」及「相關規定期限」通報衛生主管機關，通報內容與期限於本辦法均未載明。",
+      "sources": ["第8條"]
+    },
+    {
+      "type": "other",
+      "description": "第4條 SAC 第一級或第二級的「二小時內」，起算時點（發生時或發現時）未載明。24 小時與 2 小時屬依 SAC 分級適用的不同時限，並非矛盾。",
+      "sources": ["第4條"]
+    },
+    {
+      "type": "other",
+      "description": "保存期限未載明：附件一、附件二、第6條根本原因分析報告、第7條統計與年度報告、第8條通報紀錄均未規定保存年限，retention 皆填 null。",
+      "sources": ["附件一", "附件二", "第6條", "第7條", "第8條"]
+    },
+    {
+      "type": "other",
+      "description": "核定或覆核者未載明：附件一、第7條統計與年度報告、第8條通報紀錄均未規定核定者（第7條的統計結果是「提報」病人安全委員會，非核定）。",
+      "sources": ["附件一", "第7條", "第8條"]
+    },
+    {
+      "type": "other",
+      "description": "第7條年度病人安全報告只規定「彙整」，未載明報告應包含的內容要素，required_elements 留空。",
+      "sources": ["第7條"]
+    }
+  ]
+}
