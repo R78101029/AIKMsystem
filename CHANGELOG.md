@@ -12,6 +12,7 @@
 - 架構文件 v0.2（六層架構，新增 Agent 編排層）
 - PR 範本、需求變更 Issue 範本
 - 對外溝通紀錄：2026-11-03 給文管中心與資訊室的系統示意頁（`docs/00-project/communications/`）
+- 市場與競品分析 v0.1（內部文件）、競品搜尋討論紀錄
 
 ### 變更
 - 文件依 ISO/IEC 29110 生命週期重整至 `docs/00-project` ～ `docs/09-quality`

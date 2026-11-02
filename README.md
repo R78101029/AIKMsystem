@@ -17,6 +17,7 @@
 | [系統架構](docs/02-architecture/architecture.md) | 六層架構、轉接器、模組 |
 | [架構決策紀錄](docs/adr/README.md) | ADR-0001～0019 |
 | [專案計畫](docs/00-project/project-plan.md) | 里程碑、下一步、風險 |
+| [市場與競品分析](docs/00-project/market-analysis.md) | 台灣同類產品、差異化、法規趨勢（內部文件） |
 | [討論紀錄](docs/discussions/) | 依日期整理 |
 | [開發程序](docs/09-quality/development-process.md) | ISO/IEC 29110 |
 | [資料夾結構](docs/02-architecture/repository-structure.md) | 程式庫結構說明 |
