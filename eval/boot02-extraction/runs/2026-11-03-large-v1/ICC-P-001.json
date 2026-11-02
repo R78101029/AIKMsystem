@@ -1,0 +1,82 @@
+{
+  "policy_id": "ICC-P-001",
+  "evidence_specs": [
+    {
+      "name": "感染管制委員會會議紀錄",
+      "record_type": "meeting_minutes",
+      "pdca_phase": "C",
+      "frequency": {
+        "unit": "quarter",
+        "interval": 1,
+        "deadline": null,
+        "source_text": "本委員會每三個月召開會議一次（第3條）；會議紀錄應於會後十四日內陳主任委員核定（第6條）"
+      },
+      "producer": {
+        "unit": "感染管制中心",
+        "role": "感染管制委員會幹事（由感染管制中心指派，辦理會議紀錄及議事事務）"
+      },
+      "approver": "主任委員（會後十四日內陳核定）",
+      "required_elements": [
+        { "name": "開會日期", "source": "第6條" },
+        { "name": "出席及請假人員", "source": "第6條" },
+        { "name": "報告事項", "source": "第6條" },
+        { "name": "討論事項", "source": "第6條" },
+        { "name": "決議事項", "source": "第6條" },
+        { "name": "決議事項之負責單位及完成期限", "source": "第6條" },
+        { "name": "院內感染監測資料之報告與檢討", "source": "第5條" },
+        { "name": "前次會議決議事項之執行追蹤", "source": "第5條" },
+        { "name": "抗生素使用管理報告", "source": "第5條" },
+        { "name": "感染管制相關政策與作業規範之審議", "source": "第5條" }
+      ],
+      "retention": "七年",
+      "sources": ["第3條", "第5條", "第6條", "第7條"],
+      "confidence": 0.9
+    },
+    {
+      "name": "感染管制委員會委員聘任紀錄",
+      "record_type": "appointment_record",
+      "pdca_phase": "P",
+      "frequency": {
+        "unit": "year",
+        "interval": 2,
+        "deadline": null,
+        "source_text": "委員若干人，由院長就感染科醫師、護理部主任、檢驗科主任、藥劑部主任、總務室主任及相關科部主管聘任之，任期二年，期滿得續聘"
+      },
+      "producer": {
+        "unit": null,
+        "role": null
+      },
+      "approver": "院長",
+      "required_elements": [
+        { "name": "主任委員（院長兼任或院長指定之副院長）", "source": "第2條" },
+        { "name": "委員名單（感染科醫師、護理部主任、檢驗科主任、藥劑部主任、總務室主任及相關科部主管）", "source": "第2條" },
+        { "name": "任期（二年）", "source": "第2條" }
+      ],
+      "retention": null,
+      "sources": ["第2條"],
+      "confidence": 0.6
+    }
+  ],
+  "issues": [
+    {
+      "type": "ambiguous_frequency",
+      "description": "第3條規定「必要時得召開臨時會議」，臨時會議之召開頻率不明確，其會議紀錄的產生次數無法事先確定。",
+      "sources": ["第3條"]
+    },
+    {
+      "type": "missing_responsibility",
+      "description": "第2條規定委員由院長聘任、任期二年，但未指明由何單位或人員辦理聘任作業及製作、保存聘任紀錄。",
+      "sources": ["第2條"]
+    },
+    {
+      "type": "missing_responsibility",
+      "description": "第5條規定會議應報告院內感染監測資料及抗生素使用管理報告，但未指明由何單位或人員負責提出這些報告。",
+      "sources": ["第5條"]
+    },
+    {
+      "type": "other",
+      "description": "委員聘任紀錄未規定保存期限；第6條的七年保存期限僅明定適用於會議紀錄。",
+      "sources": ["第2條", "第6條"]
+    }
+  ]
+}

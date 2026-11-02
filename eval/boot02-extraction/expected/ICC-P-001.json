@@ -1,0 +1,154 @@
+{
+  "policy_id": "ICC-P-001",
+  "specs": [
+    {
+      "id": "S1",
+      "label": "感染管制委員會會議紀錄",
+      "required": true,
+      "name_keywords": [
+        "會議紀錄",
+        "會議"
+      ],
+      "freq_accept": [
+        [
+          "quarter",
+          1
+        ],
+        [
+          "month",
+          3
+        ]
+      ],
+      "producer_keywords": [
+        "感染管制中心",
+        "幹事"
+      ],
+      "sources": [
+        "3",
+        "6"
+      ],
+      "retention_keywords": [
+        "七年",
+        "7年",
+        "7 年",
+        "84"
+      ],
+      "elements": [
+        {
+          "name": "開會日期",
+          "keywords": [
+            "日期"
+          ]
+        },
+        {
+          "name": "出席人員",
+          "keywords": [
+            "出席"
+          ]
+        },
+        {
+          "name": "請假人員",
+          "keywords": [
+            "請假"
+          ]
+        },
+        {
+          "name": "報告事項",
+          "keywords": [
+            "報告事項"
+          ]
+        },
+        {
+          "name": "討論事項",
+          "keywords": [
+            "討論"
+          ]
+        },
+        {
+          "name": "決議事項",
+          "keywords": [
+            "決議"
+          ]
+        },
+        {
+          "name": "決議指定負責單位",
+          "keywords": [
+            "負責單位",
+            "負責"
+          ]
+        },
+        {
+          "name": "決議完成期限",
+          "keywords": [
+            "期限"
+          ]
+        },
+        {
+          "name": "主席為主任委員或代理人",
+          "keywords": [
+            "主席",
+            "主任委員"
+          ]
+        },
+        {
+          "name": "出席達二分之一",
+          "keywords": [
+            "二分之一",
+            "1/2",
+            "半數",
+            "過半",
+            "法定"
+          ]
+        },
+        {
+          "name": "感染監測資料報告與檢討",
+          "keywords": [
+            "監測"
+          ]
+        },
+        {
+          "name": "前次決議執行追蹤",
+          "keywords": [
+            "前次",
+            "追蹤"
+          ]
+        },
+        {
+          "name": "抗生素使用管理報告",
+          "keywords": [
+            "抗生素"
+          ]
+        },
+        {
+          "name": "會後十四日內陳主任委員核定",
+          "keywords": [
+            "核定"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "O1",
+      "label": "委員聘任紀錄",
+      "required": false,
+      "name_keywords": [
+        "聘任",
+        "聘書",
+        "委員名單",
+        "聘"
+      ]
+    },
+    {
+      "id": "O2",
+      "label": "臨時會議紀錄",
+      "required": false,
+      "name_keywords": [
+        "臨時會議"
+      ]
+    }
+  ],
+  "distractor_keywords": [
+    "保密"
+  ],
+  "issues": []
+}

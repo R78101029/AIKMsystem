@@ -1,0 +1,347 @@
+{
+  "policy_id": "ER-P-012",
+  "specs": [
+    {
+      "id": "S1",
+      "label": "急救車點班檢查表",
+      "required": true,
+      "name_keywords": [
+        "點班",
+        "每日檢查",
+        "檢查表"
+      ],
+      "freq_accept": [
+        [
+          "day",
+          1
+        ],
+        [
+          "shift",
+          1
+        ]
+      ],
+      "producer_keywords": [
+        "護理人員",
+        "當班"
+      ],
+      "sources": [
+        "4",
+        "附表1"
+      ],
+      "elements": [
+        {
+          "name": "日期",
+          "keywords": [
+            "日期"
+          ]
+        },
+        {
+          "name": "班別",
+          "keywords": [
+            "班別"
+          ]
+        },
+        {
+          "name": "封條編號",
+          "keywords": [
+            "封條編號",
+            "編號"
+          ]
+        },
+        {
+          "name": "封條完整",
+          "keywords": [
+            "完整"
+          ]
+        },
+        {
+          "name": "電擊器充電測試",
+          "keywords": [
+            "充電"
+          ]
+        },
+        {
+          "name": "電擊器放電測試",
+          "keywords": [
+            "放電"
+          ]
+        },
+        {
+          "name": "測試紙條",
+          "keywords": [
+            "紙條"
+          ]
+        },
+        {
+          "name": "氧氣筒壓力",
+          "keywords": [
+            "氧氣"
+          ]
+        },
+        {
+          "name": "抽吸器功能",
+          "keywords": [
+            "抽吸"
+          ]
+        },
+        {
+          "name": "檢查人員簽名",
+          "keywords": [
+            "簽名",
+            "簽章"
+          ]
+        },
+        {
+          "name": "護理長覆核",
+          "keywords": [
+            "覆核"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "label": "急救車藥品衛材清點表",
+      "required": true,
+      "name_keywords": [
+        "清點"
+      ],
+      "freq_accept": [
+        [
+          "month",
+          1
+        ]
+      ],
+      "producer_keywords": [
+        "單位",
+        "護理"
+      ],
+      "sources": [
+        "5",
+        "附表2"
+      ],
+      "elements": [
+        {
+          "name": "清點日期",
+          "keywords": [
+            "日期"
+          ]
+        },
+        {
+          "name": "品項",
+          "keywords": [
+            "品項"
+          ]
+        },
+        {
+          "name": "應備數量",
+          "keywords": [
+            "應備"
+          ]
+        },
+        {
+          "name": "實際數量",
+          "keywords": [
+            "實際"
+          ]
+        },
+        {
+          "name": "有效期限",
+          "keywords": [
+            "效期",
+            "有效期限"
+          ]
+        },
+        {
+          "name": "即期品處理",
+          "keywords": [
+            "即期",
+            "更換"
+          ]
+        },
+        {
+          "name": "清點人員簽名",
+          "keywords": [
+            "簽名",
+            "簽章"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "label": "藥劑部急救車藥品抽查紀錄",
+      "required": true,
+      "name_keywords": [
+        "抽查"
+      ],
+      "freq_accept": [
+        [
+          "quarter",
+          1
+        ],
+        [
+          "month",
+          3
+        ]
+      ],
+      "producer_keywords": [
+        "藥劑"
+      ],
+      "sources": [
+        "6"
+      ],
+      "elements": [
+        {
+          "name": "抽查結果",
+          "keywords": [
+            "結果"
+          ]
+        },
+        {
+          "name": "提報藥事委員會",
+          "keywords": [
+            "藥事委員會",
+            "提報"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "label": "急救車使用補充紀錄",
+      "required": true,
+      "name_keywords": [
+        "補充"
+      ],
+      "freq_accept": [
+        [
+          "event",
+          null
+        ]
+      ],
+      "deadline_keywords": [
+        "24",
+        "二十四"
+      ],
+      "producer_keywords": [
+        "護理"
+      ],
+      "sources": [
+        "7",
+        "附表3"
+      ],
+      "elements": [
+        {
+          "name": "使用日期",
+          "keywords": [
+            "使用日期"
+          ]
+        },
+        {
+          "name": "病歷號碼",
+          "keywords": [
+            "病歷"
+          ]
+        },
+        {
+          "name": "使用品項",
+          "keywords": [
+            "品項"
+          ]
+        },
+        {
+          "name": "使用數量",
+          "keywords": [
+            "數量"
+          ]
+        },
+        {
+          "name": "補充日期時間",
+          "keywords": [
+            "補充日期",
+            "補充時間"
+          ]
+        },
+        {
+          "name": "補充人員",
+          "keywords": [
+            "補充人員"
+          ]
+        },
+        {
+          "name": "新封條編號",
+          "keywords": [
+            "封條"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "label": "急救車教育訓練紀錄",
+      "required": true,
+      "name_keywords": [
+        "訓練"
+      ],
+      "freq_accept": [
+        [
+          "unknown",
+          null
+        ]
+      ],
+      "producer_keywords": [
+        "護理部"
+      ],
+      "sources": [
+        "9"
+      ],
+      "elements": []
+    },
+    {
+      "id": "O1",
+      "label": "封條異常通報",
+      "required": false,
+      "name_keywords": [
+        "異常",
+        "通報",
+        "封條開啟",
+        "封條毀損"
+      ]
+    }
+  ],
+  "distractor_keywords": [],
+  "issues": [
+    {
+      "id": "I1",
+      "label": "第4條「每日」與附表一「每班」矛盾",
+      "types": [
+        "conflict"
+      ],
+      "keywords": [
+        "每班"
+      ]
+    },
+    {
+      "id": "I2",
+      "label": "第9條「定期」頻率不明確",
+      "types": [
+        "ambiguous_frequency"
+      ],
+      "keywords": [
+        "定期",
+        "訓練"
+      ]
+    },
+    {
+      "id": "I3",
+      "label": "第8條引用異常事件通報辦法",
+      "types": [
+        "external_reference"
+      ],
+      "keywords": [
+        "異常事件"
+      ]
+    }
+  ]
+}

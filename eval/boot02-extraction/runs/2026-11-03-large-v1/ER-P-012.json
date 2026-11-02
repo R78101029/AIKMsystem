@@ -1,0 +1,200 @@
+{
+  "policy_id": "ER-P-012",
+  "evidence_specs": [
+    {
+      "name": "急救車點班檢查表",
+      "record_type": "inspection_log",
+      "pdca_phase": "D",
+      "frequency": {
+        "unit": "day",
+        "interval": 1,
+        "deadline": null,
+        "source_text": "急救車應每日由當班護理人員依「急救車點班檢查表」（附表一）檢查一次（第4條）；附表一標題註明「每班檢查」"
+      },
+      "producer": {
+        "unit": "設置急救車之各護理單位、門診及檢查單位",
+        "role": "當班護理人員"
+      },
+      "approver": "護理長（附表一「護理長覆核」欄）",
+      "required_elements": [
+        { "name": "日期", "source": "附表一" },
+        { "name": "班別", "source": "附表一" },
+        { "name": "封條編號", "source": "第4條、附表一" },
+        { "name": "封條完整（是／否）", "source": "第4條、附表一" },
+        { "name": "電擊器充電測試", "source": "第4條、附表一" },
+        { "name": "電擊器放電測試", "source": "第4條、附表一" },
+        { "name": "電擊器測試紙條（列印並黏貼）", "source": "第4條、附表一" },
+        { "name": "氧氣筒壓力（psi）", "source": "第4條、附表一" },
+        { "name": "抽吸器功能", "source": "第4條、附表一" },
+        { "name": "檢查人員簽名", "source": "第4條、附表一" },
+        { "name": "護理長覆核", "source": "附表一" }
+      ],
+      "retention": null,
+      "sources": ["第3條", "第4條", "附表一"],
+      "confidence": 0.8
+    },
+    {
+      "name": "急救車藥品衛材清點表",
+      "record_type": "inventory_check",
+      "pdca_phase": "D",
+      "frequency": {
+        "unit": "month",
+        "interval": 1,
+        "deadline": null,
+        "source_text": "急救車內藥品及衛材應每月由單位清點一次"
+      },
+      "producer": {
+        "unit": "設置急救車之各單位",
+        "role": "單位護理人員"
+      },
+      "approver": null,
+      "required_elements": [
+        { "name": "清點日期", "source": "附表二" },
+        { "name": "品項", "source": "第5條、附表二" },
+        { "name": "應備數量", "source": "第5條、附表二" },
+        { "name": "實際數量", "source": "第5條、附表二" },
+        { "name": "有效期限", "source": "第5條、附表二" },
+        { "name": "即期品處理（有效期限於三個月內到期者應予更換）", "source": "第5條、附表二" },
+        { "name": "清點人員簽名", "source": "附表二" }
+      ],
+      "retention": null,
+      "sources": ["第3條", "第5條", "附表二"],
+      "confidence": 0.85
+    },
+    {
+      "name": "急救車藥品抽查紀錄",
+      "record_type": "audit_report",
+      "pdca_phase": "C",
+      "frequency": {
+        "unit": "quarter",
+        "interval": 1,
+        "deadline": null,
+        "source_text": "藥劑部每季抽查各單位急救車藥品至少一次"
+      },
+      "producer": {
+        "unit": "藥劑部",
+        "role": null
+      },
+      "approver": "藥事委員會（提報）",
+      "required_elements": [
+        { "name": "受抽查單位", "source": "第6條" },
+        { "name": "抽查結果", "source": "第6條" }
+      ],
+      "retention": null,
+      "sources": ["第3條", "第6條"],
+      "confidence": 0.8
+    },
+    {
+      "name": "急救車使用補充紀錄",
+      "record_type": "other",
+      "pdca_phase": "D",
+      "frequency": {
+        "unit": "event",
+        "interval": 1,
+        "deadline": "急救車使用後二十四小時內完成補充並重新上封條",
+        "source_text": "急救車使用後，應於二十四小時內完成補充並重新上封條"
+      },
+      "producer": {
+        "unit": "設置急救車之各單位",
+        "role": "單位護理人員（補充人員）"
+      },
+      "approver": null,
+      "required_elements": [
+        { "name": "使用日期", "source": "第7條、附表三" },
+        { "name": "病歷號碼", "source": "第7條、附表三" },
+        { "name": "使用品項", "source": "第7條、附表三" },
+        { "name": "使用數量", "source": "第7條、附表三" },
+        { "name": "補充日期時間", "source": "附表三" },
+        { "name": "補充人員", "source": "第7條、附表三" },
+        { "name": "新封條編號", "source": "第7條、附表三" }
+      ],
+      "retention": null,
+      "sources": ["第3條", "第7條", "附表三"],
+      "confidence": 0.9
+    },
+    {
+      "name": "急救車封條非因急救開啟或毀損之異常事件通報",
+      "record_type": "incident_report",
+      "pdca_phase": "D",
+      "frequency": {
+        "unit": "event",
+        "interval": 1,
+        "deadline": null,
+        "source_text": "封條非因急救使用而遭開啟或毀損時，發現人員應通報護理長，並依本院異常事件通報及處理辦法辦理"
+      },
+      "producer": {
+        "unit": null,
+        "role": "發現人員"
+      },
+      "approver": null,
+      "required_elements": [
+        { "name": "封條非因急救使用而遭開啟或毀損之情形", "source": "第8條" }
+      ],
+      "retention": null,
+      "sources": ["第8條"],
+      "confidence": 0.55
+    },
+    {
+      "name": "急救車使用教育訓練紀錄",
+      "record_type": "training_record",
+      "pdca_phase": "D",
+      "frequency": {
+        "unit": "unknown",
+        "interval": null,
+        "deadline": null,
+        "source_text": "護理部應定期辦理急救車使用教育訓練，並保存訓練紀錄"
+      },
+      "producer": {
+        "unit": "護理部",
+        "role": null
+      },
+      "approver": null,
+      "required_elements": [],
+      "retention": null,
+      "sources": ["第3條", "第9條"],
+      "confidence": 0.7
+    }
+  ],
+  "issues": [
+    {
+      "type": "conflict",
+      "description": "第4條規定急救車「每日」檢查一次，但附表一標題為「每班檢查」且設有「班別」欄位，檢查頻率（每日或每班）互相矛盾。",
+      "sources": ["第4條", "附表一"]
+    },
+    {
+      "type": "ambiguous_frequency",
+      "description": "第9條規定護理部「定期」辦理急救車使用教育訓練，未明定實際頻率。",
+      "sources": ["第9條"]
+    },
+    {
+      "type": "external_reference",
+      "description": "第8條規定封條非因急救使用而遭開啟或毀損時，依「本院異常事件通報及處理辦法」辦理；通報時限、表單及必備要素須依該辦法，本辦法未載明。",
+      "sources": ["第8條"]
+    },
+    {
+      "type": "other",
+      "description": "附表一設有「護理長覆核」欄位，但第4條僅規定由檢查人員簽名，未規定護理長覆核的頻率與時限；第3條僅規定護理長負督導之責。",
+      "sources": ["第3條", "第4條", "附表一"]
+    },
+    {
+      "type": "other",
+      "description": "第5條清點表、第7條使用補充紀錄、第8條通報及第9條訓練紀錄均未規定覆核或核定者；附表二、附表三亦未設覆核欄位。",
+      "sources": ["第5條", "第7條", "第8條", "第9條", "附表二", "附表三"]
+    },
+    {
+      "type": "other",
+      "description": "第6條藥劑部抽查紀錄未指定表單格式、必備欄位及執行人員角色，僅規定應作成紀錄並提報藥事委員會。",
+      "sources": ["第6條"]
+    },
+    {
+      "type": "other",
+      "description": "第9條訓練紀錄未規定應包含的要素（如訓練日期、參訓人員、課程內容）及保存期限。",
+      "sources": ["第9條"]
+    },
+    {
+      "type": "other",
+      "description": "本辦法未規定任何紀錄的保存期限。",
+      "sources": ["第4條", "第5條", "第6條", "第7條", "第9條"]
+    }
+  ]
+}

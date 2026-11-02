@@ -1,0 +1,357 @@
+{
+  "policy_id": "QM-P-020",
+  "specs": [
+    {
+      "id": "S1",
+      "label": "異常事件通報單",
+      "required": true,
+      "name_keywords": [
+        "通報單",
+        "異常事件通報"
+      ],
+      "freq_accept": [
+        [
+          "event",
+          null
+        ]
+      ],
+      "deadline_keywords": [
+        "24",
+        "二十四"
+      ],
+      "producer_keywords": [
+        "發現"
+      ],
+      "sources": [
+        "4",
+        "附件1"
+      ],
+      "elements": [
+        {
+          "name": "發生日期時間",
+          "keywords": [
+            "發生日期",
+            "發生時間"
+          ]
+        },
+        {
+          "name": "發生地點",
+          "keywords": [
+            "地點"
+          ]
+        },
+        {
+          "name": "事件類別",
+          "keywords": [
+            "類別"
+          ]
+        },
+        {
+          "name": "事件經過",
+          "keywords": [
+            "經過"
+          ]
+        },
+        {
+          "name": "病人結果",
+          "keywords": [
+            "病人結果"
+          ]
+        },
+        {
+          "name": "嚴重度評估",
+          "keywords": [
+            "SAC",
+            "嚴重度"
+          ]
+        },
+        {
+          "name": "立即處理措施",
+          "keywords": [
+            "立即處理"
+          ]
+        },
+        {
+          "name": "通報人單位",
+          "keywords": [
+            "通報人"
+          ]
+        },
+        {
+          "name": "通報日期時間",
+          "keywords": [
+            "通報日期",
+            "通報時間"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "label": "異常事件處理回覆單",
+      "required": true,
+      "name_keywords": [
+        "回覆單",
+        "處理回覆"
+      ],
+      "freq_accept": [
+        [
+          "event",
+          null
+        ]
+      ],
+      "deadline_keywords": [
+        "七日",
+        "7日",
+        "7 日",
+        "7天",
+        "七天"
+      ],
+      "producer_keywords": [
+        "單位主管"
+      ],
+      "sources": [
+        "5",
+        "附件2"
+      ],
+      "elements": [
+        {
+          "name": "通報單編號",
+          "keywords": [
+            "編號"
+          ]
+        },
+        {
+          "name": "調查結果",
+          "keywords": [
+            "調查"
+          ]
+        },
+        {
+          "name": "原因分析",
+          "keywords": [
+            "原因"
+          ]
+        },
+        {
+          "name": "改善措施",
+          "keywords": [
+            "改善"
+          ]
+        },
+        {
+          "name": "預計完成日期",
+          "keywords": [
+            "預計完成",
+            "完成日期"
+          ]
+        },
+        {
+          "name": "單位主管簽名",
+          "keywords": [
+            "單位主管"
+          ]
+        },
+        {
+          "name": "部門主管核閱",
+          "keywords": [
+            "部門主管",
+            "核閱"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "label": "根本原因分析報告",
+      "required": true,
+      "name_keywords": [
+        "根本原因",
+        "RCA"
+      ],
+      "freq_accept": [
+        [
+          "event",
+          null
+        ]
+      ],
+      "deadline_keywords": [
+        "一個月",
+        "1個月",
+        "1 個月",
+        "30"
+      ],
+      "producer_keywords": null,
+      "sources": [
+        "6"
+      ],
+      "elements": [
+        {
+          "name": "事件經過",
+          "keywords": [
+            "經過"
+          ]
+        },
+        {
+          "name": "根本原因",
+          "keywords": [
+            "根本原因"
+          ]
+        },
+        {
+          "name": "改善行動計畫",
+          "keywords": [
+            "行動計畫",
+            "改善行動"
+          ]
+        },
+        {
+          "name": "負責人",
+          "keywords": [
+            "負責人"
+          ]
+        },
+        {
+          "name": "完成期限",
+          "keywords": [
+            "期限"
+          ]
+        },
+        {
+          "name": "提報病人安全委員會",
+          "keywords": [
+            "病人安全委員會",
+            "病安"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "label": "異常事件季統計分析報告",
+      "required": true,
+      "name_keywords": [
+        "統計",
+        "季"
+      ],
+      "freq_accept": [
+        [
+          "quarter",
+          1
+        ],
+        [
+          "month",
+          3
+        ]
+      ],
+      "producer_keywords": [
+        "品質管理中心",
+        "品管"
+      ],
+      "sources": [
+        "7"
+      ],
+      "elements": [
+        {
+          "name": "事件類別",
+          "keywords": [
+            "類別"
+          ]
+        },
+        {
+          "name": "嚴重度",
+          "keywords": [
+            "嚴重度"
+          ]
+        },
+        {
+          "name": "改善情形",
+          "keywords": [
+            "改善"
+          ]
+        },
+        {
+          "name": "提報病人安全委員會",
+          "keywords": [
+            "病人安全委員會",
+            "病安"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "label": "年度病人安全報告",
+      "required": true,
+      "name_keywords": [
+        "年度"
+      ],
+      "freq_accept": [
+        [
+          "year",
+          1
+        ]
+      ],
+      "producer_keywords": [
+        "品質管理中心",
+        "品管"
+      ],
+      "sources": [
+        "7"
+      ],
+      "elements": []
+    },
+    {
+      "id": "S6",
+      "label": "主管機關通報紀錄",
+      "required": true,
+      "name_keywords": [
+        "主管機關",
+        "衛生"
+      ],
+      "freq_accept": [
+        [
+          "event",
+          null
+        ]
+      ],
+      "producer_keywords": [
+        "品質管理中心",
+        "品管"
+      ],
+      "sources": [
+        "8"
+      ],
+      "elements": []
+    }
+  ],
+  "distractor_keywords": [
+    "不究責",
+    "保密"
+  ],
+  "issues": [
+    {
+      "id": "I1",
+      "label": "第8條引用主管機關規定（期限未寫明）",
+      "types": [
+        "external_reference",
+        "ambiguous_frequency",
+        "other"
+      ],
+      "keywords": [
+        "主管機關"
+      ]
+    },
+    {
+      "id": "I2",
+      "label": "第6條未指明誰執行根本原因分析（選擇性）",
+      "types": [
+        "missing_responsibility"
+      ],
+      "keywords": [
+        "根本原因"
+      ],
+      "optional": true
+    }
+  ]
+}

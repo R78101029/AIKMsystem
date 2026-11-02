@@ -1,0 +1,337 @@
+[
+  {
+    "policy_id": "ER-P-012",
+    "spec_recall": [
+      5,
+      5
+    ],
+    "spec_precision": [
+      5,
+      5
+    ],
+    "freq": [
+      5,
+      5
+    ],
+    "deadline": [
+      1,
+      1
+    ],
+    "producer": [
+      5,
+      5
+    ],
+    "source": [
+      5,
+      5
+    ],
+    "retention": [
+      0,
+      0
+    ],
+    "element_recall_mean": 1.0,
+    "issues": [
+      3,
+      3
+    ],
+    "extras_unmatched": [],
+    "distractor_hits": [],
+    "details": [
+      {
+        "id": "S1",
+        "label": "急救車點班檢查表",
+        "required": true,
+        "matched": true,
+        "pred_name": "急救車點班檢查表",
+        "freq_ok": true,
+        "freq_pred": "day/1",
+        "producer_ok": true,
+        "source_ok": true,
+        "element_recall": 1.0,
+        "elements_missing": []
+      },
+      {
+        "id": "S2",
+        "label": "急救車藥品衛材清點表",
+        "required": true,
+        "matched": true,
+        "pred_name": "急救車藥品衛材清點表",
+        "freq_ok": true,
+        "freq_pred": "month/1",
+        "producer_ok": true,
+        "source_ok": true,
+        "element_recall": 1.0,
+        "elements_missing": []
+      },
+      {
+        "id": "S3",
+        "label": "藥劑部急救車藥品抽查紀錄",
+        "required": true,
+        "matched": true,
+        "pred_name": "急救車藥品抽查紀錄",
+        "freq_ok": true,
+        "freq_pred": "quarter/1",
+        "producer_ok": true,
+        "source_ok": true,
+        "element_recall": 1.0,
+        "elements_missing": []
+      },
+      {
+        "id": "S4",
+        "label": "急救車使用補充紀錄",
+        "required": true,
+        "matched": true,
+        "pred_name": "急救車使用補充紀錄",
+        "freq_ok": true,
+        "freq_pred": "event/1",
+        "deadline_ok": true,
+        "producer_ok": true,
+        "source_ok": true,
+        "element_recall": 1.0,
+        "elements_missing": []
+      },
+      {
+        "id": "S5",
+        "label": "急救車教育訓練紀錄",
+        "required": true,
+        "matched": true,
+        "pred_name": "急救車使用教育訓練紀錄",
+        "freq_ok": true,
+        "freq_pred": "unknown/None",
+        "producer_ok": true,
+        "source_ok": true
+      },
+      {
+        "id": "O1",
+        "label": "封條異常通報",
+        "required": false,
+        "matched": false
+      }
+    ],
+    "issue_details": [
+      {
+        "id": "I1",
+        "label": "第4條「每日」與附表一「每班」矛盾",
+        "detected": true,
+        "optional": false
+      },
+      {
+        "id": "I2",
+        "label": "第9條「定期」頻率不明確",
+        "detected": true,
+        "optional": false
+      },
+      {
+        "id": "I3",
+        "label": "第8條引用異常事件通報辦法",
+        "detected": true,
+        "optional": false
+      }
+    ]
+  },
+  {
+    "policy_id": "ICC-P-001",
+    "spec_recall": [
+      1,
+      1
+    ],
+    "spec_precision": [
+      1,
+      1
+    ],
+    "freq": [
+      0,
+      1
+    ],
+    "deadline": [
+      0,
+      0
+    ],
+    "producer": [
+      1,
+      1
+    ],
+    "source": [
+      1,
+      1
+    ],
+    "retention": [
+      1,
+      1
+    ],
+    "element_recall_mean": 0.786,
+    "issues": [
+      0,
+      0
+    ],
+    "extras_unmatched": [],
+    "distractor_hits": [],
+    "details": [
+      {
+        "id": "S1",
+        "label": "感染管制委員會會議紀錄",
+        "required": true,
+        "matched": true,
+        "pred_name": "感染管制委員會會議紀錄",
+        "freq_ok": false,
+        "freq_pred": "event/1",
+        "producer_ok": true,
+        "source_ok": true,
+        "element_recall": 0.786,
+        "elements_missing": [
+          "主席為主任委員或代理人",
+          "出席達二分之一",
+          "會後十四日內陳主任委員核定"
+        ],
+        "retention_ok": true
+      },
+      {
+        "id": "O1",
+        "label": "委員聘任紀錄",
+        "required": false,
+        "matched": false
+      },
+      {
+        "id": "O2",
+        "label": "臨時會議紀錄",
+        "required": false,
+        "matched": false
+      }
+    ],
+    "issue_details": []
+  },
+  {
+    "policy_id": "QM-P-020",
+    "spec_recall": [
+      6,
+      6
+    ],
+    "spec_precision": [
+      6,
+      6
+    ],
+    "freq": [
+      6,
+      6
+    ],
+    "deadline": [
+      3,
+      3
+    ],
+    "producer": [
+      5,
+      5
+    ],
+    "source": [
+      6,
+      6
+    ],
+    "retention": [
+      0,
+      0
+    ],
+    "element_recall_mean": 0.896,
+    "issues": [
+      1,
+      1
+    ],
+    "extras_unmatched": [],
+    "distractor_hits": [],
+    "details": [
+      {
+        "id": "S1",
+        "label": "異常事件通報單",
+        "required": true,
+        "matched": true,
+        "pred_name": "異常事件通報單",
+        "freq_ok": true,
+        "freq_pred": "event/1",
+        "deadline_ok": true,
+        "producer_ok": true,
+        "source_ok": true,
+        "element_recall": 1.0,
+        "elements_missing": []
+      },
+      {
+        "id": "S2",
+        "label": "異常事件處理回覆單",
+        "required": true,
+        "matched": true,
+        "pred_name": "異常事件處理回覆單",
+        "freq_ok": true,
+        "freq_pred": "event/1",
+        "deadline_ok": true,
+        "producer_ok": true,
+        "source_ok": true,
+        "element_recall": 1.0,
+        "elements_missing": []
+      },
+      {
+        "id": "S3",
+        "label": "根本原因分析報告",
+        "required": true,
+        "matched": true,
+        "pred_name": "根本原因分析報告",
+        "freq_ok": true,
+        "freq_pred": "event/1",
+        "deadline_ok": true,
+        "source_ok": true,
+        "element_recall": 0.833,
+        "elements_missing": [
+          "提報病人安全委員會"
+        ]
+      },
+      {
+        "id": "S4",
+        "label": "異常事件季統計分析報告",
+        "required": true,
+        "matched": true,
+        "pred_name": "異常事件季統計分析報告",
+        "freq_ok": true,
+        "freq_pred": "quarter/1",
+        "producer_ok": true,
+        "source_ok": true,
+        "element_recall": 0.75,
+        "elements_missing": [
+          "提報病人安全委員會"
+        ]
+      },
+      {
+        "id": "S5",
+        "label": "年度病人安全報告",
+        "required": true,
+        "matched": true,
+        "pred_name": "年度病人安全報告",
+        "freq_ok": true,
+        "freq_pred": "year/1",
+        "producer_ok": true,
+        "source_ok": true
+      },
+      {
+        "id": "S6",
+        "label": "主管機關通報紀錄",
+        "required": true,
+        "matched": true,
+        "pred_name": "衛生主管機關通報紀錄",
+        "freq_ok": true,
+        "freq_pred": "event/1",
+        "producer_ok": true,
+        "source_ok": true
+      }
+    ],
+    "issue_details": [
+      {
+        "id": "I1",
+        "label": "第8條引用主管機關規定（期限未寫明）",
+        "detected": true,
+        "optional": false
+      },
+      {
+        "id": "I2",
+        "label": "第6條未指明誰執行根本原因分析（選擇性）",
+        "detected": true,
+        "optional": true
+      }
+    ]
+  }
+]
