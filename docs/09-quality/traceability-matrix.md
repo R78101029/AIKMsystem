@@ -17,6 +17,7 @@
 | FW-01、03 | 0002 | data-model §1 | db/0001 | smoke #2 |
 | FW-02 | 0003 | data-model §1 | db/0001 | smoke #1 |
 | SPEC-01～03 | 0001、0002 | data-model §2 | db/0001 | smoke #2 |
+| SPEC-07、08 | — | data-model v0.2 #15、#17；UC-01 | | |
 | TASK-01～05、11 | 0001、0015 | | | |
 | DOC-01～03、07 | 0004 | data-model §3 | db/0001（部分） | |
 | BOOT-01～04 | 0014、0019 | | | eval/boot02-extraction（技術驗證） |
